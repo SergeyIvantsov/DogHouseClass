@@ -20,5 +20,4 @@ public interface DogService {
 
     DogDto update(DogDto dogDto);
 
-
 }

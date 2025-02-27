@@ -22,6 +22,7 @@ public class DogController {
     public String getDogs(Model model) {
         model.addAttribute("dogs", dogService.findAll());
         model.addAttribute("addDog", new DogDto());
+        model.addAttribute("deleteDog", new DogDto());
         return "dog";
     }
 
@@ -31,6 +32,15 @@ public class DogController {
                           BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             dogService.save(dogDto);
+            return "redirect:/getDogs";
+        }
+        return "dog";
+    }
+
+    @PostMapping("/deleteDog")
+    public String deleteDog(@ModelAttribute("deleteDog") DogDto dogDto) {
+        if (dogDto.getId() != null) {
+            dogService.delete(dogDto.getId());
             return "redirect:/getDogs";
         }
         return "dog";

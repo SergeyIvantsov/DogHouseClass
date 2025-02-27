@@ -1,38 +1,39 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns="http://www.w3.org/1999/html"
       xmlns:sec="http://www.w3.org/1999/xhtml">
-xmlns:sec="http://www.springframework.org.shema.security"
+<!--xmlns:sec="http://www.springframework.org.shema.security"-->
 
 <head>
     <meta charset="UTF-8">
-    <title>Welcome</title>
+    <title>DogHouse</title>
     <!--    след. строчка для подключения стилей css ссылкой через thymeleaf (th)-->
 <!--    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>-->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js">
     </script>
     <!--    на языке jquery-->
-    <script>
-        function addProduct(){
-            $.ajax({
-                dataType: "json",
-                type: 'get',
-                url: "/dogs"
-            }).done(function (data){
-                console.log(data);
+<!--    <script>-->
+<!--        function addProduct(){-->
+<!--            $.ajax({-->
+<!--                dataType: "json",-->
+<!--                type: 'get',-->
+<!--                url: "/dogs"-->
+<!--            }).done(function (data){-->
+<!--                console.log(data);-->
 
-                //dropdown -выпадающий список
-                var $dropdown = $("#dropdown");
-                $.each(data, function (index, value){
-                    $('#dog').val($('#dog').val()+"; name: "+value.name + " id: " + value.id);
-                    $dropdown.append($("<option />").val(value.id).text(value.name));
-                });
-            }).fail(function (data){
-                if (console && console.log){
-                    console.log("Error data: ", data);
-                }
-            });
-        };
-    </script>
+<!--                //dropdown -выпадающий список-->
+<!--                var $dropdown = $("#dropdown");-->
+<!--                $.each(data, function (index, value){-->
+<!--                    $('#dog').val($('#dog').val()+"; name: "+value.name + " id: " + value.id);-->
+<!--                    $dropdown.append($("<option />").val(value.id).text(value.name));-->
+<!--                });-->
+<!--            }).fail(function (data){-->
+<!--                if (console && console.log){-->
+<!--                    console.log("Error data: ", data);-->
+<!--                }-->
+<!--            });-->
+<!--        };-->
+<!--    </script>-->
 
 </head>
 <body>
@@ -70,27 +71,27 @@ xmlns:sec="http://www.springframework.org.shema.security"
         <input type="submit" value="Добавить собаку"/>
     </form>
 
+</br>
+<form th:action="@{/deleteDog}"
+      th:object="${deleteDog}" method="POST">
+    <label for="id">ID собаки для удаления:</label>
+    <input type="number" th:field="*{id}" placeholder="Введите ID собаки"/>
+    <br/>
+    <input type="submit" value="Удалить собаку"/>
+</form>
+<!--<input type="button" id="send" name="вывести собак" value="нажать" />-->
+<!--<input type="text" id="dog" size="255"/>-->
+<!--<select id="dropdown">-->
+<!--</select>-->
 
+<!--<script>-->
+<!--    //при загрузке страницы добавляет кнопку, к которой прикрепляется функция addProduct (верхняя часть кода)-->
+<!--    $(document).ready(function (){-->
+<!--        $('#send').click(function (){-->
+<!--            addProduct();-->
+<!--        });-->
+<!--    })-->
+<!--</script>-->
 
-<input type="button" id="send" name="вывести собак" value="нажать" />
-<input type="text" id="dog" size="255"/>
-<select id="dropdown">
-</select>
-
-<script>
-    //при загрузке страницы добавляет кнопку, к которой прикрепляется функция addProduct (верхняя часть кода)
-    $(document).ready(function (){
-        $('#send').click(function (){
-            addProduct();
-        });
-    })
-</script>
 </body>
-<!--создаем кнопку logout для удалении истории пользователя-->
-<!--<form method="post" th:action="@{/logout}">-->
-<!--    <div>-->
-<!--        <button class="btn logout" type="submit">Logout</button>-->
-<!--    </div>-->
-<!--</form>-->
-
 </html>
