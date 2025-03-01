@@ -7,11 +7,11 @@
 <head>
     <meta charset="UTF-8">
     <title>DogHouse</title>
-    <!--    след. строчка для подключения стилей css ссылкой через thymeleaf (th)-->
+
     <!--    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>-->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js">
     </script>
-    <!--        на языке jquery-->
+
     <script>
         function addProduct() {
             $.ajax({
@@ -26,8 +26,8 @@
                 $dropdown.empty();
                 $.each(data, function (index, value) {
                         console.log(value);
-                        $('#dog').val($('#dog').val() + " name: " + value.name + " id: " + value.id+";");
-                        $dropdown.append($("<option />").val(value.id).text(value.name));
+                        $('#dog').val($('#dog').val() +" id: " + value.id+ " name: " + value.name +" age: "+value.age+" type: "+value.type+";");
+                        $dropdown.append($("<option />").val(value.id).text(value.name).text(value.type).val(value.age));
                 });
             }).fail(function (data) {
                 if (console && console.log) {
@@ -58,8 +58,6 @@
     </tr>
 </table>
 
-<!--    @ значит куда мы делаем запрос-->
-<!--    $ значит значение, котор. добавляем-->
 <form th:action="@{/addDog}"
       th:object="${addDog}" method="POST">
     Age:
