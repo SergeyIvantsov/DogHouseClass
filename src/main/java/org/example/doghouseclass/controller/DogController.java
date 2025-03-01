@@ -8,17 +8,15 @@ import org.example.doghouseclass.service.DogService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
 public class DogController {
 
     private final DogService dogService;
-
 
     @GetMapping("/getDogs")
     public String getDogs(Model model) {
@@ -29,6 +27,11 @@ public class DogController {
         return "dog";
     }
 
+    @GetMapping("/dogs")
+    @ResponseBody
+    public List<DogDto> getDogsForDropdown() {
+        return dogService.findAll();  // Получаем список собак через сервис
+    }
 
     @PostMapping("/addDog")
     public String saveDog(@Valid @ModelAttribute("addDog") DogDto dogDto,
@@ -56,7 +59,6 @@ public class DogController {
             DogDto dogDto = new DogDto(dog.getId(), dog.getAge(), dog.getName(), dog.getType());
             model.addAttribute("dog", dogDto);
             return "updateDog";
-
         }else {
             return "redirect:/getDogs";
         }

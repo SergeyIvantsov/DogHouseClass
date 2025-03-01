@@ -11,31 +11,33 @@
     <!--    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>-->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js">
     </script>
-    <!--    на языке jquery-->
-    <!--    <script>-->
-    <!--        function addProduct(){-->
-    <!--            $.ajax({-->
-    <!--                dataType: "json",-->
-    <!--                type: 'get',-->
-    <!--                url: "/dogs"-->
-    <!--            }).done(function (data){-->
-    <!--                console.log(data);-->
+    <!--        на языке jquery-->
+    <script>
+        function addProduct() {
+            $.ajax({
+                dataType: "json",
+                type: 'get',
+                url: "/dogs"
+            }).done(function (data) {
+                console.log(data);
 
-    <!--                //dropdown -выпадающий список-->
-    <!--                var $dropdown = $("#dropdown");-->
-    <!--                $.each(data, function (index, value){-->
-    <!--                    $('#dog').val($('#dog').val()+"; name: "+value.name + " id: " + value.id);-->
-    <!--                    $dropdown.append($("<option />").val(value.id).text(value.name));-->
-    <!--                });-->
-    <!--            }).fail(function (data){-->
-    <!--                if (console && console.log){-->
-    <!--                    console.log("Error data: ", data);-->
-    <!--                }-->
-    <!--            });-->
-    <!--        };-->
-    <!--    </script>-->
-
+                //dropdown -выпадающий список
+                var $dropdown = $("#dropdown");
+                $dropdown.empty();
+                $.each(data, function (index, value) {
+                        console.log(value);
+                        $('#dog').val($('#dog').val() + " name: " + value.name + " id: " + value.id+";");
+                        $dropdown.append($("<option />").val(value.id).text(value.name));
+                });
+            }).fail(function (data) {
+                if (console && console.log) {
+                    console.log("Error data: ", data);
+                }
+            });
+        }
+    </script>
 </head>
+
 <body>
 <table border="1">
     <tr>
@@ -83,19 +85,21 @@
     <br/>
     <input type="submit" value="Удалить собаку"/>
 </form>
-<!--<input type="button" id="send" name="вывести собак" value="нажать" />-->
-<!--<input type="text" id="dog" size="255"/>-->
-<!--<select id="dropdown">-->
-<!--</select>-->
 
-<!--<script>-->
-<!--    //при загрузке страницы добавляет кнопку, к которой прикрепляется функция addProduct (верхняя часть кода)-->
-<!--    $(document).ready(function (){-->
-<!--        $('#send').click(function (){-->
-<!--            addProduct();-->
-<!--        });-->
-<!--    })-->
-<!--</script>-->
+
+<input type="button" id="send" name="вывести собак" value="нажать"/>
+<input type="text" id="dog" size="255"/>
+<select id="dropdown">
+</select>
+
+<script>
+    //при загрузке страницы добавляет кнопку, к которой прикрепляется функция addProduct (верхняя часть кода)
+    $(document).ready(function () {
+        $('#send').click(function () {
+            addProduct();
+        });
+    })
+</script>
 
 </body>
 </html>
