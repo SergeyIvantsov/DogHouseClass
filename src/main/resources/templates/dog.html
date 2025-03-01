@@ -8,32 +8,32 @@
     <meta charset="UTF-8">
     <title>DogHouse</title>
     <!--    след. строчка для подключения стилей css ссылкой через thymeleaf (th)-->
-<!--    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>-->
+    <!--    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>-->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js">
     </script>
     <!--    на языке jquery-->
-<!--    <script>-->
-<!--        function addProduct(){-->
-<!--            $.ajax({-->
-<!--                dataType: "json",-->
-<!--                type: 'get',-->
-<!--                url: "/dogs"-->
-<!--            }).done(function (data){-->
-<!--                console.log(data);-->
+    <!--    <script>-->
+    <!--        function addProduct(){-->
+    <!--            $.ajax({-->
+    <!--                dataType: "json",-->
+    <!--                type: 'get',-->
+    <!--                url: "/dogs"-->
+    <!--            }).done(function (data){-->
+    <!--                console.log(data);-->
 
-<!--                //dropdown -выпадающий список-->
-<!--                var $dropdown = $("#dropdown");-->
-<!--                $.each(data, function (index, value){-->
-<!--                    $('#dog').val($('#dog').val()+"; name: "+value.name + " id: " + value.id);-->
-<!--                    $dropdown.append($("<option />").val(value.id).text(value.name));-->
-<!--                });-->
-<!--            }).fail(function (data){-->
-<!--                if (console && console.log){-->
-<!--                    console.log("Error data: ", data);-->
-<!--                }-->
-<!--            });-->
-<!--        };-->
-<!--    </script>-->
+    <!--                //dropdown -выпадающий список-->
+    <!--                var $dropdown = $("#dropdown");-->
+    <!--                $.each(data, function (index, value){-->
+    <!--                    $('#dog').val($('#dog').val()+"; name: "+value.name + " id: " + value.id);-->
+    <!--                    $dropdown.append($("<option />").val(value.id).text(value.name));-->
+    <!--                });-->
+    <!--            }).fail(function (data){-->
+    <!--                if (console && console.log){-->
+    <!--                    console.log("Error data: ", data);-->
+    <!--                }-->
+    <!--            });-->
+    <!--        };-->
+    <!--    </script>-->
 
 </head>
 <body>
@@ -43,33 +43,37 @@
         <th>Age</th>
         <th>Name</th>
         <th>Type</th>
+        <th>Actions</th>
     </tr>
     <tr th:each="dog : ${dogs}">
         <td th:utext="${dog.id}">...</td>
         <td th:utext="${dog.age}">...</td>
         <td th:utext="${dog.name}">...</td>
         <td th:utext="${dog.type}">...</td>
+        <td class="action-buttons">
+            <a th:href="@{/editDog/{id}(id = ${dog.id})}">Update</a>
+        </td>
     </tr>
 </table>
-<!--все поля: добавить город, ошибка доступны только для пользователя ADMIN-->
-    <!--    @ значит куда мы делаем запрос-->
-    <!--    $ значит значение, котор. добавляем-->
-    <form th:action="@{/addDog}"
-          th:object="${addDog}" method="POST">
-        Age:
-        <input type="number" th:field="*{age}"/>
-        </br>
-        Name:
-        <div th:if="${#fields.hasErrors('name')}">
-            <span th:errors="*{name}" class="error"></span>
-        </div>
-        <input type="text" th:field="*{name}"/>
-        </br>
-        Type:
-        <input type="text" th:field="*{type}"/>
-        </br>
-        <input type="submit" value="Добавить собаку"/>
-    </form>
+
+<!--    @ значит куда мы делаем запрос-->
+<!--    $ значит значение, котор. добавляем-->
+<form th:action="@{/addDog}"
+      th:object="${addDog}" method="POST">
+    Age:
+    <input type="number" th:field="*{age}"/>
+    </br>
+    Name:
+    <div th:if="${#fields.hasErrors('name')}">
+        <span th:errors="*{name}" class="error"></span>
+    </div>
+    <input type="text" th:field="*{name}"/>
+    </br>
+    Type:
+    <input type="text" th:field="*{type}"/>
+    </br>
+    <input type="submit" value="Добавить собаку"/>
+</form>
 
 </br>
 <form th:action="@{/deleteDog}"

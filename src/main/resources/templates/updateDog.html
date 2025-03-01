@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование собаки</title>
+</head>
+<body>
+<h1>Редактировать собаку</h1>
+
+<form th:action="@{/updateDog}"
+      th:object="${dog}" method="POST">
+    <input type="hidden" th:field="*{id}" />
+
+    <label for="age">Age:</label>
+    <input type="number" th:field="*{age}"/>
+    </br>
+
+    <label for="name">Name:</label>
+    <input type="text" th:field="*{name}"/>
+    </br>
+
+    <label for="type">Type:</label>
+    <input type="text" th:field="*{type}"/>
+    </br>
+
+    <input type="submit" value="Сохранить изменения"/>
+</form>
+</body>
+</html>

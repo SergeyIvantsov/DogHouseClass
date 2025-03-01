@@ -3,12 +3,14 @@ package org.example.doghouseclass.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.doghouseclass.dto.DogDto;
+import org.example.doghouseclass.entity.Dog;
 import org.example.doghouseclass.service.DogService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @RequiredArgsConstructor
@@ -23,6 +25,7 @@ public class DogController {
         model.addAttribute("dogs", dogService.findAll());
         model.addAttribute("addDog", new DogDto());
         model.addAttribute("deleteDog", new DogDto());
+        model.addAttribute("updateDog", new DogDto());
         return "dog";
     }
 
@@ -46,7 +49,23 @@ public class DogController {
         return "dog";
     }
 
+    @GetMapping ("/editDog/{id}")
+    public String editDog(@PathVariable("id") Integer id, Model model) {
+        DogDto dog = dogService.findById(id);
+        if (dog != null) {
+            DogDto dogDto = new DogDto(dog.getId(), dog.getAge(), dog.getName(), dog.getType());
+            model.addAttribute("dog", dogDto);
+            return "updateDog";
 
+        }else {
+            return "redirect:/getDogs";
+        }
+    }
 
+    @PostMapping("/updateDog")
+    public String updateDog(@ModelAttribute("dog") DogDto dogDto) {
+        dogService.update(dogDto);
+return "redirect:/getDogs";
+    }
 
 }

@@ -7,10 +7,13 @@ import org.example.doghouseclass.entity.Dog;
 import org.example.doghouseclass.repository.DogRepository;
 import org.example.doghouseclass.service.DogService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class DogServiceImpl implements DogService {
@@ -45,11 +48,21 @@ public class DogServiceImpl implements DogService {
 
     @Override
     public DogDto update(DogDto dogDto) {
-        Dog dog = convertDtoToEntity(dogDto);
-        if (dog != null) {
+        if (dogRepository.existsById(dogDto.getId())) {
+            Dog dog = convertDtoToEntity(dogDto);
+            dog = dogRepository.save(dog);
             return convertEntityToDto(dog);
-        } else return null;
+        } else {
+            return null;
+        }
     }
+
+    @Override
+    public DogDto findById(Integer id) {
+        Optional<Dog> byId = dogRepository.findById(id);
+                return convertEntityToDto(byId.get());
+    }
+
 
     public Dog convertDtoToEntity(DogDto dogDto) {
         Dog dog = new Dog();

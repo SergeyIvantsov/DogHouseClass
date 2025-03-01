@@ -20,4 +20,6 @@ public interface DogService {
 
     DogDto update(DogDto dogDto);
 
+    DogDto findById(Integer id);
+
 }
